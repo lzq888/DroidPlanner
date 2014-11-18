@@ -12,7 +12,7 @@ import com.MAVLink.Messages.MAVLinkPayload;
 public class msg_position_target_local_ned extends MAVLinkMessage{
 
 	public static final int MAVLINK_MSG_ID_POSITION_TARGET_LOCAL_NED = 85;
-	public static final int MAVLINK_MSG_LENGTH = 43;
+	public static final int MAVLINK_MSG_LENGTH = 51;
 	private static final long serialVersionUID = MAVLINK_MSG_ID_POSITION_TARGET_LOCAL_NED;
 	
 
@@ -57,7 +57,15 @@ public class msg_position_target_local_ned extends MAVLinkMessage{
 	*/
 	public float afz; 
  	/**
-	* Bitmask to indicate which dimensions should be ignored by the vehicle: a value of 0b0000000000000000 or 0b0000001000000000 indicates that none of the setpoint dimensions should be ignored. If bit 10 is set the floats afx afy afz should be interpreted as force instead of acceleration. Mapping: bit 1: x, bit 2: y, bit 3: z, bit 4: vx, bit 5: vy, bit 6: vz, bit 7: ax, bit 8: ay, bit 9: az, bit 10: is force setpoint
+	* yaw setpoint in rad
+	*/
+	public float yaw; 
+ 	/**
+	* yaw rate setpoint in rad/s
+	*/
+	public float yaw_rate; 
+ 	/**
+	* Bitmask to indicate which dimensions should be ignored by the vehicle: a value of 0b0000000000000000 or 0b0000001000000000 indicates that none of the setpoint dimensions should be ignored. If bit 10 is set the floats afx afy afz should be interpreted as force instead of acceleration. Mapping: bit 1: x, bit 2: y, bit 3: z, bit 4: vx, bit 5: vy, bit 6: vz, bit 7: ax, bit 8: ay, bit 9: az, bit 10: is force setpoint, bit 11: yaw, bit 12: yaw rate
 	*/
 	public short type_mask; 
  	/**
@@ -85,6 +93,8 @@ public class msg_position_target_local_ned extends MAVLinkMessage{
 		packet.payload.putFloat(afx);
 		packet.payload.putFloat(afy);
 		packet.payload.putFloat(afz);
+		packet.payload.putFloat(yaw);
+		packet.payload.putFloat(yaw_rate);
 		packet.payload.putShort(type_mask);
 		packet.payload.putByte(coordinate_frame);
 		return packet;		
@@ -107,6 +117,8 @@ public class msg_position_target_local_ned extends MAVLinkMessage{
 	    afx = payload.getFloat();
 	    afy = payload.getFloat();
 	    afz = payload.getFloat();
+	    yaw = payload.getFloat();
+	    yaw_rate = payload.getFloat();
 	    type_mask = payload.getShort();
 	    coordinate_frame = payload.getByte();    
     }
@@ -132,11 +144,11 @@ public class msg_position_target_local_ned extends MAVLinkMessage{
         //Log.d("MAVLINK_MSG_ID_POSITION_TARGET_LOCAL_NED", toString());
     }
     
-                        
+                            
     /**
      * Returns a string with the MSG name and data
      */
     public String toString(){
-    	return "MAVLINK_MSG_ID_POSITION_TARGET_LOCAL_NED -"+" time_boot_ms:"+time_boot_ms+" x:"+x+" y:"+y+" z:"+z+" vx:"+vx+" vy:"+vy+" vz:"+vz+" afx:"+afx+" afy:"+afy+" afz:"+afz+" type_mask:"+type_mask+" coordinate_frame:"+coordinate_frame+"";
+    	return "MAVLINK_MSG_ID_POSITION_TARGET_LOCAL_NED -"+" time_boot_ms:"+time_boot_ms+" x:"+x+" y:"+y+" z:"+z+" vx:"+vx+" vy:"+vy+" vz:"+vz+" afx:"+afx+" afy:"+afy+" afz:"+afz+" yaw:"+yaw+" yaw_rate:"+yaw_rate+" type_mask:"+type_mask+" coordinate_frame:"+coordinate_frame+"";
     }
 }

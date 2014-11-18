@@ -17,7 +17,7 @@ public class msg_ping extends MAVLinkMessage{
 	
 
  	/**
-	* Unix timestamp in microseconds
+	* Unix timestamp in microseconds or since system boot if smaller than MAVLink epoch (1.1.2009)
 	*/
 	public long time_usec; 
  	/**

@@ -17,15 +17,15 @@ public class msg_mount_status extends MAVLinkMessage{
 	
 
  	/**
-	* pitch(deg*100) or lat, depending on mount mode
+	* pitch(deg*100)
 	*/
 	public int pointing_a; 
  	/**
-	* roll(deg*100) or lon depending on mount mode
+	* roll(deg*100)
 	*/
 	public int pointing_b; 
  	/**
-	* yaw(deg*100) or alt (in cm) depending on mount mode
+	* yaw(deg*100)
 	*/
 	public int pointing_c; 
  	/**

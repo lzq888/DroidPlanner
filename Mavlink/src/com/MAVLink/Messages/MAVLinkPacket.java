@@ -1,7 +1,7 @@
 package com.MAVLink.Messages;
 
 import java.io.Serializable;
-
+import android.util.Log;
 import com.MAVLink.Messages.ardupilotmega.*;
 
 /**
@@ -23,7 +23,6 @@ import com.MAVLink.Messages.ardupilotmega.*;
  * The minimum packet length is 8 bytes for acknowledgement packets without payload
  * The maximum packet length is 263 bytes for full payload
  * 
- *
  */
 public class MAVLinkPacket implements Serializable {
 	private static final long serialVersionUID = 2095947771227815314L;
@@ -74,6 +73,7 @@ public class MAVLinkPacket implements Serializable {
 	 */
 	public boolean payloadIsFilled() {
 		if (payload.size() >= MAVLinkPayload.MAX_PAYLOAD_SIZE-1) {
+			Log.d("MAV","Buffer overflow");
 			return true;
 		}
 		return (payload.size() == len);
@@ -330,8 +330,8 @@ public class MAVLinkPacket implements Serializable {
 			return  new msg_vicon_position_estimate(this);
 		case msg_highres_imu.MAVLINK_MSG_ID_HIGHRES_IMU:
 			return  new msg_highres_imu(this);
-		case msg_omnidirectional_flow.MAVLINK_MSG_ID_OMNIDIRECTIONAL_FLOW:
-			return  new msg_omnidirectional_flow(this);
+		case msg_optical_flow_rad.MAVLINK_MSG_ID_OPTICAL_FLOW_RAD:
+			return  new msg_optical_flow_rad(this);
 		case msg_hil_sensor.MAVLINK_MSG_ID_HIL_SENSOR:
 			return  new msg_hil_sensor(this);
 		case msg_sim_state.MAVLINK_MSG_ID_SIM_STATE:
@@ -340,6 +340,8 @@ public class MAVLinkPacket implements Serializable {
 			return  new msg_radio_status(this);
 		case msg_file_transfer_protocol.MAVLINK_MSG_ID_FILE_TRANSFER_PROTOCOL:
 			return  new msg_file_transfer_protocol(this);
+		case msg_timesync.MAVLINK_MSG_ID_TIMESYNC:
+			return  new msg_timesync(this);
 		case msg_hil_gps.MAVLINK_MSG_ID_HIL_GPS:
 			return  new msg_hil_gps(this);
 		case msg_hil_optical_flow.MAVLINK_MSG_ID_HIL_OPTICAL_FLOW:
@@ -405,7 +407,7 @@ public class MAVLinkPacket implements Serializable {
 		case msg_debug.MAVLINK_MSG_ID_DEBUG:
 			return  new msg_debug(this);
 		default:
-			System.err.println("UNKNOW MESSAGE - " + msgid);
+			Log.d("MAVLink", "UNKNOW MESSAGE - " + msgid);
 			return null;
 		}
 	}
