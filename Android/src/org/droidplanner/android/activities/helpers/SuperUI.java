@@ -5,7 +5,6 @@ import org.droidplanner.android.DroidPlannerApp;
 import org.droidplanner.android.dialogs.YesNoDialog;
 import org.droidplanner.android.dialogs.YesNoWithPrefsDialog;
 import org.droidplanner.android.fragments.helpers.BTDeviceListFragment;
-import org.droidplanner.android.maps.providers.google_map.GoogleMapFragment;
 import org.droidplanner.android.proxy.mission.MissionProxy;
 import org.droidplanner.android.utils.Utils;
 import org.droidplanner.android.utils.prefs.DroidPlannerPrefs;

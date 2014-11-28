@@ -2,9 +2,7 @@ package org.droidplanner.android.fragments;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.TreeMap;
-import java.util.TreeSet;
 
 import org.droidplanner.R;
 import org.droidplanner.android.DroidPlannerApp;

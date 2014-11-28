@@ -1,17 +1,11 @@
 package org.droidplanner.android.gcs.location;
 
-import org.droidplanner.android.utils.GoogleApiClientManager;
-import org.droidplanner.android.utils.GoogleApiClientManager.GoogleApiClientTask;
 import org.droidplanner.core.gcs.location.Location.LocationFinder;
 import org.droidplanner.core.gcs.location.Location.LocationReceiver;
 import org.droidplanner.core.helpers.coordinates.Coord2D;
 
-import android.content.Context;
 import android.location.Location;
 import android.util.Log;
-
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
 
 /**
  * Feeds Location Data from Android's FusedLocation LocationProvider
@@ -26,9 +20,9 @@ public class FusedLocation implements LocationFinder, com.google.android.gms.loc
     private static final float LOCATION_ACCURACY_THRESHOLD = 15.0f;
     private static final float JUMP_FACTOR = 4.0f;
 
-    private final GoogleApiClientManager gApiMgr;
-    private final GoogleApiClientTask requestLocationUpdate;
-    private final GoogleApiClientTask removeLocationUpdate;
+//    private final GoogleApiClientManager gApiMgr;
+//    private final GoogleApiClientTask requestLocationUpdate;
+//    private final GoogleApiClientTask removeLocationUpdate;
 
 	private LocationReceiver receiver;
 
@@ -37,48 +31,48 @@ public class FusedLocation implements LocationFinder, com.google.android.gms.loc
     private float mTotalSpeed;
     private long mSpeedReadings;
 
-	public FusedLocation(Context context) {
-        gApiMgr = new GoogleApiClientManager(context, LocationServices.API);
+//	public FusedLocation(Context context) {
+//        gApiMgr = new GoogleApiClientManager(context, LocationServices.API);
 
-        requestLocationUpdate = gApiMgr.new GoogleApiClientTask() {
-            @Override
-            protected void doRun() {
-                final LocationRequest locationRequest = LocationRequest.create();
-                locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-                locationRequest.setInterval(MIN_TIME_MS);
-                locationRequest.setFastestInterval(MIN_TIME_MS);
-                locationRequest.setSmallestDisplacement(MIN_DISTANCE_M);
-                LocationServices.FusedLocationApi.requestLocationUpdates(getGoogleApiClient(),
-                        locationRequest, FusedLocation.this);
-            }
-        };
-
-        removeLocationUpdate = gApiMgr.new GoogleApiClientTask() {
-            @Override
-            protected void doRun() {
-                LocationServices.FusedLocationApi.removeLocationUpdates(getGoogleApiClient(),
-                        FusedLocation.this);
-            }
-        };
-
-        gApiMgr.start();
-	}
+//        requestLocationUpdate = gApiMgr.new GoogleApiClientTask() {
+//            @Override
+//            protected void doRun() {
+////                final LocationRequest locationRequest = LocationRequest.create();
+////                locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+////                locationRequest.setInterval(MIN_TIME_MS);
+////                locationRequest.setFastestInterval(MIN_TIME_MS);
+////                locationRequest.setSmallestDisplacement(MIN_DISTANCE_M);
+////                LocationServices.FusedLocationApi.requestLocationUpdates(getGoogleApiClient(),
+////                        locationRequest, FusedLocation.this);
+//            }
+//        };
+//
+//        removeLocationUpdate = gApiMgr.new GoogleApiClientTask() {
+//            @Override
+//            protected void doRun() {
+////                LocationServices.FusedLocationApi.removeLocationUpdates(getGoogleApiClient(),
+////                        FusedLocation.this);
+//            }
+//        };
+//
+//        gApiMgr.start();
+//	}
 
 	@Override
 	public void enableLocationUpdates() {
         mSpeedReadings = 0;
         mTotalSpeed = 0f;
-        try {
-            gApiMgr.addTask(requestLocationUpdate);
-        }catch(IllegalStateException e){
-            Log.e(TAG, "Unable to request location updates.");
-        }
+//        try {
+//            gApiMgr.addTask(requestLocationUpdate);
+//        }catch(IllegalStateException e){
+//            Log.e(TAG, "Unable to request location updates.");
+//        }
 	}
 
 	@Override
 	public void disableLocationUpdates() {
         try {
-            gApiMgr.addTask(removeLocationUpdate);
+//            gApiMgr.addTask(removeLocationUpdate);
         }catch(IllegalStateException e){
             Log.e(TAG, "Unable to disable location updates.");
         }

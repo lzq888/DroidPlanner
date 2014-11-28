@@ -3,7 +3,6 @@ package org.droidplanner.android.fragments;
 import org.droidplanner.R;
 import org.droidplanner.android.DroidPlannerApp;
 import org.droidplanner.android.activities.helpers.SuperUI;
-import org.droidplanner.android.utils.analytics.GAUtils;
 import org.droidplanner.core.drone.DroneInterfaces;
 import org.droidplanner.core.drone.variables.State;
 import org.droidplanner.core.gcs.follow.Follow;
@@ -19,7 +18,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.MAVLink.Messages.ApmModes;
-import com.google.android.gms.analytics.HitBuilders;
 
 /**
  * Provides functionality for flight action buttons specific to planes.
@@ -146,8 +144,8 @@ public class PlaneFlightActionsFragment extends Fragment implements View.OnClick
 
 	@Override
 	public void onClick(View v) {
-        HitBuilders.EventBuilder eventBuilder = new HitBuilders.EventBuilder()
-                .setCategory(GAUtils.Category.FLIGHT);
+//        HitBuilders.//eventBuilder //eventBuilder = new HitBuilders.//eventBuilder()
+//                .setCategory(GAUtils.Category.FLIGHT);
 
         switch(v.getId()){
             case R.id.mc_connectBtn:
@@ -156,7 +154,7 @@ public class PlaneFlightActionsFragment extends Fragment implements View.OnClick
 
             case R.id.mc_homeBtn:
                 drone.getState().changeFlightMode(ApmModes.FIXED_WING_RTL);
-                eventBuilder.setAction(ACTION_FLIGHT_ACTION_BUTTON).setLabel(ApmModes.FIXED_WING_RTL.getName());
+                //eventBuilder.setAction(ACTION_FLIGHT_ACTION_BUTTON).setLabel(ApmModes.FIXED_WING_RTL.getName());
                 break;
 
             case R.id.mc_pause:
@@ -165,12 +163,12 @@ public class PlaneFlightActionsFragment extends Fragment implements View.OnClick
                 }
 
                 drone.getGuidedPoint().pauseAtCurrentLocation();
-                eventBuilder.setAction(ACTION_FLIGHT_ACTION_BUTTON).setLabel("Pause");
+                //eventBuilder.setAction(ACTION_FLIGHT_ACTION_BUTTON).setLabel("Pause");
                 break;
 
             case R.id.mc_autoBtn:
                 drone.getState().changeFlightMode(ApmModes.FIXED_WING_AUTO);
-                eventBuilder.setAction(ACTION_FLIGHT_ACTION_BUTTON).setLabel(ApmModes.FIXED_WING_AUTO.getName());
+                //eventBuilder.setAction(ACTION_FLIGHT_ACTION_BUTTON).setLabel(ApmModes.FIXED_WING_AUTO.getName());
                 break;
 
             case R.id.mc_follow:
@@ -204,19 +202,19 @@ public class PlaneFlightActionsFragment extends Fragment implements View.OnClick
                 }
 
                 if (eventLabel != null) {
-                    eventBuilder.setAction(ACTION_FLIGHT_ACTION_BUTTON).setLabel(eventLabel);
+                    //eventBuilder.setAction(ACTION_FLIGHT_ACTION_BUTTON).setLabel(eventLabel);
                     Toast.makeText(getActivity(), eventLabel, Toast.LENGTH_SHORT).show();
                 }
                 break;
 
             default:
-                eventBuilder = null;
+                //eventBuilder = null;
                 break;
         }
 
-        if (eventBuilder != null) {
-            GAUtils.sendEvent(eventBuilder);
-        }
+//        if (eventBuilder != null) {
+//            GAUtils.sendEvent(eventBuilder);
+//        }
 	}
 
 	@Override

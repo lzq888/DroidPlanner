@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Locale;
 
 import org.droidplanner.R;
-import org.droidplanner.android.utils.analytics.GAUtils;
 import org.droidplanner.android.utils.prefs.DroidPlannerPrefs;
 import org.droidplanner.android.widgets.spinners.ModeAdapter;
 import org.droidplanner.android.widgets.spinners.SpinnerSelfSelect;
@@ -22,7 +21,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.MAVLink.Messages.ApmModes;
-import com.google.android.gms.analytics.HitBuilders;
 
 /**
  * Set of actions supported by the info bar
@@ -484,11 +482,11 @@ public abstract class InfoBarItem {
                         mDrone.getState().changeFlightMode(newMode);
 
                         //Record the attempt to change flight modes
-                        final HitBuilders.EventBuilder eventBuilder = new HitBuilders.EventBuilder()
-                                .setCategory(GAUtils.Category.FLIGHT)
-                                .setAction("Flight mode changed")
-                                .setLabel(newMode.getName());
-                        GAUtils.sendEvent(eventBuilder);
+//                        final HitBuilders.EventBuilder eventBuilder = new HitBuilders.EventBuilder()
+//                                .setCategory(GAUtils.Category.FLIGHT)
+//                                .setAction("Flight mode changed")
+//                                .setLabel(newMode.getName());
+//                        GAUtils.sendEvent(eventBuilder);
                     }
                 }
             });

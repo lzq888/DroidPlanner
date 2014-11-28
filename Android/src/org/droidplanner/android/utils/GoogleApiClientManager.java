@@ -9,7 +9,6 @@ import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.common.api.Api;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 /**
@@ -31,11 +30,11 @@ public class GoogleApiClientManager {
                     final GoogleApiClientTask task = mTaskQueue.take();
 
                     if(!mGoogleApiClient.isConnected()){
-                        final ConnectionResult result = mGoogleApiClient.blockingConnect();
-                        if(!result.isSuccess()){
-                            throw new IllegalStateException("Unable to connect to the google api " +
-                                    "client: " + result.getErrorCode());
-                        }
+//                        final ConnectionResult result = mGoogleApiClient.blockingConnect();
+//                        if(!result.isSuccess()){
+//                            throw new IllegalStateException("Unable to connect to the google api " +
+//                                    "client: " + result.getErrorCode());
+//                        }
                     }
 
                     if(task.mRunOnBackgroundThread) {
@@ -83,15 +82,14 @@ public class GoogleApiClientManager {
     private final LinkedBlockingQueue<GoogleApiClientTask> mTaskQueue = new LinkedBlockingQueue
             <GoogleApiClientTask>();
 
-    public GoogleApiClientManager(Context context, Api<? extends Api.ApiOptions.NotRequiredOptions>
-            ... apis){
+    public GoogleApiClientManager(Context context){
         mContext = context;
         mMainHandler = new Handler();
 
         final GoogleApiClient.Builder apiBuilder = new GoogleApiClient.Builder(context);
-        for(Api api: apis){
-            apiBuilder.addApi(api);
-        }
+//        for(Api api: apis){
+//            apiBuilder.addApi(api);
+//        }
 
         mGoogleApiClient = apiBuilder.build();
     }

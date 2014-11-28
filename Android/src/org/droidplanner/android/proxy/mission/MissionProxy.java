@@ -7,7 +7,6 @@ import java.util.List;
 import org.droidplanner.android.maps.DPMap;
 import org.droidplanner.android.maps.MarkerInfo;
 import org.droidplanner.android.proxy.mission.item.MissionItemProxy;
-import org.droidplanner.android.utils.analytics.GAUtils;
 import org.droidplanner.core.helpers.coordinates.Coord2D;
 import org.droidplanner.core.helpers.coordinates.Coord3D;
 import org.droidplanner.core.helpers.geoTools.GeoTools;
@@ -24,8 +23,6 @@ import org.droidplanner.core.mission.waypoints.SpatialCoordItem;
 import org.droidplanner.core.mission.waypoints.SplineWaypoint;
 import org.droidplanner.core.mission.waypoints.Waypoint;
 import org.droidplanner.core.util.Pair;
-
-import com.google.android.gms.analytics.HitBuilders;
 
 /**
  * This class is used to render a {@link org.droidplanner.core.mission.Mission}
@@ -569,33 +566,33 @@ public class MissionProxy implements DPMap.PathSource {
         mMission.sendMissionToAPM();
 
         //Send an event for the created mission
-        HitBuilders.EventBuilder eventBuilder = new HitBuilders.EventBuilder()
-                .setCategory(GAUtils.Category.MISSION_PLANNING)
-                .setAction("Mission sent to drone")
-                .setLabel("Mission items count")
-                .setValue(mMissionItems.size());
-        GAUtils.sendEvent(eventBuilder);
+//        HitBuilders.EventBuilder eventBuilder = new HitBuilders.EventBuilder()
+//                .setCategory(GAUtils.Category.MISSION_PLANNING)
+//                .setAction("Mission sent to drone")
+//                .setLabel("Mission items count")
+//                .setValue(mMissionItems.size());
+//        GAUtils.sendEvent(eventBuilder);
 
-        String missionItemsList = "[";
-        if(!mMissionItems.isEmpty()){
-            boolean isFirst = true;
-            for(MissionItemProxy itemProxy: mMissionItems){
-                if(isFirst)
-                    isFirst = false;
-                else
-                    missionItemsList += ", ";
+//        String missionItemsList = "[";
+//        if(!mMissionItems.isEmpty()){
+//            boolean isFirst = true;
+//            for(MissionItemProxy itemProxy: mMissionItems){
+//                if(isFirst)
+//                    isFirst = false;
+//                else
+//                    missionItemsList += ", ";
+//
+//                missionItemsList += itemProxy.getMissionItem().getType().getName();
+//            }
+//        }
+//
+//        missionItemsList += "]";
 
-                missionItemsList += itemProxy.getMissionItem().getType().getName();
-            }
-        }
-
-        missionItemsList += "]";
-
-        eventBuilder = new HitBuilders.EventBuilder()
-                .setCategory(GAUtils.Category.MISSION_PLANNING)
-                .setAction("Mission sent to drone")
-                .setLabel("Mission items: " + missionItemsList);
-        GAUtils.sendEvent(eventBuilder);
+//        eventBuilder = new HitBuilders.EventBuilder()
+//                .setCategory(GAUtils.Category.MISSION_PLANNING)
+//                .setAction("Mission sent to drone")
+//                .setLabel("Mission items: " + missionItemsList);
+//        GAUtils.sendEvent(eventBuilder);
     }
 
 	public Length getMissionLength() {

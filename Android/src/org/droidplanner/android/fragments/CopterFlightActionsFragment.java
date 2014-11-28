@@ -7,7 +7,6 @@ import org.droidplanner.android.activities.helpers.SuperUI;
 import org.droidplanner.android.dialogs.YesNoDialog;
 import org.droidplanner.android.dialogs.YesNoWithPrefsDialog;
 import org.droidplanner.android.proxy.mission.MissionProxy;
-import org.droidplanner.android.utils.analytics.GAUtils;
 import org.droidplanner.core.MAVLink.MavLinkArm;
 import org.droidplanner.core.drone.DroneInterfaces;
 import org.droidplanner.core.drone.variables.State;
@@ -26,7 +25,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.MAVLink.Messages.ApmModes;
-import com.google.android.gms.analytics.HitBuilders;
 
 /**
  * Provide functionality for flight action button specific to copters.
@@ -132,8 +130,8 @@ public class CopterFlightActionsFragment extends Fragment implements View.OnClic
 
     @Override
     public void onClick(View v) {
-        HitBuilders.EventBuilder eventBuilder = new HitBuilders.EventBuilder()
-                .setCategory(GAUtils.Category.FLIGHT);
+//        HitBuilders.EventBuilder eventBuilder = new HitBuilders.EventBuilder()
+//                .setCategory(GAUtils.Category.FLIGHT);
 
         switch (v.getId()) {
             case R.id.mc_connectBtn:
@@ -142,27 +140,27 @@ public class CopterFlightActionsFragment extends Fragment implements View.OnClic
 
             case R.id.mc_armBtn:
                 getArmingConfirmation();
-                eventBuilder.setAction(ACTION_FLIGHT_ACTION_BUTTON).setLabel("Arm");
+//                eventBuilder.setAction(ACTION_FLIGHT_ACTION_BUTTON).setLabel("Arm");
                 break;
 
             case R.id.mc_disarmBtn:
                 MavLinkArm.sendArmMessage(drone, false);
-                eventBuilder.setAction(ACTION_FLIGHT_ACTION_BUTTON).setLabel("Disarm");
+//                eventBuilder.setAction(ACTION_FLIGHT_ACTION_BUTTON).setLabel("Disarm");
                 break;
 
             case R.id.mc_land:
                 drone.getState().changeFlightMode(ApmModes.ROTOR_LAND);
-                eventBuilder.setAction(ACTION_FLIGHT_ACTION_BUTTON).setLabel(ApmModes.ROTOR_LAND.getName());
+//                eventBuilder.setAction(ACTION_FLIGHT_ACTION_BUTTON).setLabel(ApmModes.ROTOR_LAND.getName());
                 break;
 
             case R.id.mc_takeoff:
                 drone.getState().doTakeoff(new Altitude(TAKEOFF_ALTITUDE));
-                eventBuilder.setAction(ACTION_FLIGHT_ACTION_BUTTON).setLabel("Takeoff");
+//                eventBuilder.setAction(ACTION_FLIGHT_ACTION_BUTTON).setLabel("Takeoff");
                 break;
 
             case R.id.mc_homeBtn:
                 drone.getState().changeFlightMode(ApmModes.ROTOR_RTL);
-                eventBuilder.setAction(ACTION_FLIGHT_ACTION_BUTTON).setLabel(ApmModes.ROTOR_RTL.getName());
+//                eventBuilder.setAction(ACTION_FLIGHT_ACTION_BUTTON).setLabel(ApmModes.ROTOR_RTL.getName());
                 break;
 
             case R.id.mc_pause:
@@ -171,17 +169,17 @@ public class CopterFlightActionsFragment extends Fragment implements View.OnClic
                 }
 
                 drone.getGuidedPoint().pauseAtCurrentLocation();
-                eventBuilder.setAction(ACTION_FLIGHT_ACTION_BUTTON).setLabel("Pause");
+//                eventBuilder.setAction(ACTION_FLIGHT_ACTION_BUTTON).setLabel("Pause");
                 break;
 
             case R.id.mc_autoBtn:
                 drone.getState().changeFlightMode(ApmModes.ROTOR_AUTO);
-                eventBuilder.setAction(ACTION_FLIGHT_ACTION_BUTTON).setLabel(ApmModes.ROTOR_AUTO.getName());
+//                eventBuilder.setAction(ACTION_FLIGHT_ACTION_BUTTON).setLabel(ApmModes.ROTOR_AUTO.getName());
                 break;
 
             case R.id.mc_TakeoffInAutoBtn:
                 getTakeOffInAutoConfirmation();
-                eventBuilder.setAction(ACTION_FLIGHT_ACTION_BUTTON).setLabel(ApmModes.ROTOR_AUTO.getName());
+//                eventBuilder.setAction(ACTION_FLIGHT_ACTION_BUTTON).setLabel(ApmModes.ROTOR_AUTO.getName());
                 break;
 
             case R.id.mc_follow:
@@ -215,24 +213,24 @@ public class CopterFlightActionsFragment extends Fragment implements View.OnClic
                 }
 
                 if (eventLabel != null) {
-                    eventBuilder.setAction(ACTION_FLIGHT_ACTION_BUTTON).setLabel(eventLabel);
+//                    eventBuilder.setAction(ACTION_FLIGHT_ACTION_BUTTON).setLabel(eventLabel);
                     Toast.makeText(getActivity(), eventLabel, Toast.LENGTH_SHORT).show();
                 }
                 break;
 
             case R.id.mc_dronieBtn:
                 getDronieConfirmation();
-                eventBuilder.setAction(ACTION_FLIGHT_ACTION_BUTTON).setLabel("Dronie uploaded");
+//                eventBuilder.setAction(ACTION_FLIGHT_ACTION_BUTTON).setLabel("Dronie uploaded");
                 break;
 
             default:
-                eventBuilder = null;
+//                eventBuilder = null;
                 break;
         }
 
-        if (eventBuilder != null) {
-            GAUtils.sendEvent(eventBuilder);
-        }
+//        if (eventBuilder != null) {
+//            GAUtils.sendEvent(eventBuilder);
+//        }
 
     }
 

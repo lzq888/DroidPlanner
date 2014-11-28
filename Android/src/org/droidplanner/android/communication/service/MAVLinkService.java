@@ -4,7 +4,6 @@ import java.lang.ref.WeakReference;
 
 import org.droidplanner.android.communication.connection.AndroidMavLinkConnection;
 import org.droidplanner.android.utils.Utils;
-import org.droidplanner.android.utils.analytics.GAUtils;
 import org.droidplanner.android.utils.prefs.DroidPlannerPrefs;
 import org.droidplanner.core.MAVLink.connection.MavLinkConnection;
 import org.droidplanner.core.MAVLink.connection.MavLinkConnectionListener;
@@ -16,7 +15,6 @@ import android.os.IBinder;
 import android.util.Log;
 
 import com.MAVLink.MAVLinkPacket;
-import com.google.android.gms.analytics.HitBuilders;
 
 /**
  * Connects to the drone through a mavlink connection, and takes care of sending
@@ -68,10 +66,10 @@ public class MAVLinkService extends Service {
 			mavConnection.connect();
 		}
 
-		// Record which connection type is used.
-		GAUtils.sendEvent(new HitBuilders.EventBuilder()
-				.setCategory(GAUtils.Category.MAVLINK_CONNECTION).setAction("MavLink connect")
-				.setLabel(connectionType + " (" + mavConnection.toString() + ") "));
+//		// Record which connection type is used.
+//		GAUtils.sendEvent(new HitBuilders.EventBuilder()
+//				.setCategory(GAUtils.Category.MAVLINK_CONNECTION).setAction("MavLink connect")
+//				.setLabel(connectionType + " (" + mavConnection.toString() + ") "));
 	}
 
 	private void disconnectMAVConnection() {
@@ -82,8 +80,8 @@ public class MAVLinkService extends Service {
 			mavConnection.disconnect();
 		}
 
-		GAUtils.sendEvent(new HitBuilders.EventBuilder().setCategory(
-				GAUtils.Category.MAVLINK_CONNECTION).setAction("MavLink disconnect"));
+//		GAUtils.sendEvent(new HitBuilders.EventBuilder().setCategory(
+//				GAUtils.Category.MAVLINK_CONNECTION).setAction("MavLink disconnect"));
 	}
 
 	/**

@@ -20,7 +20,6 @@ import org.droidplanner.android.proxy.mission.MissionProxy;
 import org.droidplanner.android.proxy.mission.MissionSelection;
 import org.droidplanner.android.proxy.mission.item.MissionItemProxy;
 import org.droidplanner.android.proxy.mission.item.fragments.MissionDetailFragment;
-import org.droidplanner.android.utils.analytics.GAUtils;
 import org.droidplanner.android.utils.file.FileStream;
 import org.droidplanner.android.utils.file.IO.MissionReader;
 import org.droidplanner.android.utils.file.IO.MissionWriter;
@@ -51,7 +50,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.MAVLink.common.msg_mission_item;
-import com.google.android.gms.analytics.HitBuilders;
 
 /**
  * This implements the map editor activity. The map editor activity allows the
@@ -293,13 +291,13 @@ public class EditorActivity extends DrawerNavigationUI implements OnPathFinished
                                 .getMsgMissionItems();
                         if (MissionWriter.write( missionItems, input.toString())) {
                             Toast.makeText(context, R.string.file_saved_success, Toast.LENGTH_SHORT).show();
-
-                            final HitBuilders.EventBuilder eventBuilder = new HitBuilders.EventBuilder()
-                                    .setCategory(GAUtils.Category.MISSION_PLANNING)
-                                    .setAction("Mission saved to file")
-                                    .setLabel("Mission items count")
-                                    .setValue(missionItems.size());
-                            GAUtils.sendEvent(eventBuilder);
+//
+//                            final HitBuilders.EventBuilder eventBuilder = new HitBuilders.EventBuilder()
+//                                    .setCategory(GAUtils.Category.MISSION_PLANNING)
+//                                    .setAction("Mission saved to file")
+//                                    .setLabel("Mission items count")
+//                                    .setValue(missionItems.size());
+//                            GAUtils.sendEvent(eventBuilder);
                         } else {
                             Toast.makeText(context, R.string.file_saved_error, Toast.LENGTH_SHORT).show();
                         }
@@ -533,11 +531,11 @@ public class EditorActivity extends DrawerNavigationUI implements OnPathFinished
                         .show();
             }
 
-            HitBuilders.EventBuilder eventBuilder = new HitBuilders.EventBuilder()
-                    .setCategory(GAUtils.Category.EDITOR)
-                    .setAction("Action mode button")
-                    .setLabel("Multi edit");
-            GAUtils.sendEvent(eventBuilder);
+//            HitBuilders.EventBuilder eventBuilder = new HitBuilders.EventBuilder()
+//                    .setCategory(GAUtils.Category.EDITOR)
+//                    .setAction("Action mode button")
+//                    .setLabel("Multi edit");
+//            GAUtils.sendEvent(eventBuilder);
 
             return true;
 

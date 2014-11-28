@@ -15,7 +15,6 @@ import org.droidplanner.android.maps.DPMap;
 import org.droidplanner.android.maps.MarkerInfo;
 import org.droidplanner.android.maps.providers.DPMapProvider;
 import org.droidplanner.android.utils.DroneHelper;
-import org.droidplanner.android.utils.GoogleApiClientManager;
 import org.droidplanner.android.utils.GoogleApiClientManager.GoogleApiClientTask;
 import org.droidplanner.android.utils.collection.HashBiMap;
 import org.droidplanner.android.utils.prefs.AutoPanMode;
@@ -40,8 +39,6 @@ import android.view.ViewTreeObserver;
 import android.widget.Toast;
 
 import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -95,7 +92,7 @@ public class GoogleMapFragment extends SupportMapFragment implements DPMap, Loca
     private GoogleApiClientTask mRemoveLocationUpdateTask;
     private GoogleApiClientTask mRequestLocationUpdateTask;
 
-    private GoogleApiClientManager mGApiClientMgr;
+//    private GoogleApiClientManager mGApiClientMgr;
 
     private Polyline flightPath;
     private Polyline missionPath;
@@ -126,40 +123,40 @@ public class GoogleMapFragment extends SupportMapFragment implements DPMap, Loca
 
         final View view = super.onCreateView(inflater, viewGroup, bundle);
 
-        mGApiClientMgr = new GoogleApiClientManager(context, LocationServices.API);
+//        mGApiClientMgr = new GoogleApiClientManager(context, LocationServices.API);
 
-        mGoToMyLocationTask = mGApiClientMgr.new GoogleApiClientTask() {
-            @Override
-            public void doRun() {
-                final Location myLocation = LocationServices.FusedLocationApi
-                        .getLastLocation(getGoogleApiClient());
-                if (myLocation != null) {
-                    updateCamera(DroneHelper.LocationToCoord(myLocation), GO_TO_MY_LOCATION_ZOOM);
-                }
-            }
-        };
-
-        mRemoveLocationUpdateTask = mGApiClientMgr.new GoogleApiClientTask() {
-            @Override
-            public void doRun() {
-                LocationServices.FusedLocationApi
-                        .removeLocationUpdates(getGoogleApiClient(), GoogleMapFragment.this);
-            }
-        };
-
-        mRequestLocationUpdateTask = mGApiClientMgr.new GoogleApiClientTask() {
-            @Override
-            public void doRun() {
-                final LocationRequest locationReq = LocationRequest.create()
-                        .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                        .setFastestInterval(USER_LOCATION_UPDATE_FASTEST_INTERVAL)
-                        .setInterval(USER_LOCATION_UPDATE_INTERVAL)
-                        .setSmallestDisplacement(USER_LOCATION_UPDATE_MIN_DISPLACEMENT);
-                LocationServices.FusedLocationApi.requestLocationUpdates(
-                        getGoogleApiClient(), locationReq, GoogleMapFragment.this);
-
-            }
-        };
+//        mGoToMyLocationTask = mGApiClientMgr.new GoogleApiClientTask() {
+//            @Override
+//            public void doRun() {
+////                final Location myLocation = LocationServices.FusedLocationApi
+////                        .getLastLocation(getGoogleApiClient());
+////                if (myLocation != null) {
+////                    updateCamera(DroneHelper.LocationToCoord(myLocation), GO_TO_MY_LOCATION_ZOOM);
+////                }
+//            }
+//        };
+//
+//        mRemoveLocationUpdateTask = mGApiClientMgr.new GoogleApiClientTask() {
+//            @Override
+//            public void doRun() {
+////                LocationServices.FusedLocationApi
+////                        .removeLocationUpdates(getGoogleApiClient(), GoogleMapFragment.this);
+//            }
+//        };
+//
+//        mRequestLocationUpdateTask = mGApiClientMgr.new GoogleApiClientTask() {
+//            @Override
+//            public void doRun() {
+//                final LocationRequest locationReq = LocationRequest.create()
+//                        .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+//                        .setFastestInterval(USER_LOCATION_UPDATE_FASTEST_INTERVAL)
+//                        .setInterval(USER_LOCATION_UPDATE_INTERVAL)
+//                        .setSmallestDisplacement(USER_LOCATION_UPDATE_MIN_DISPLACEMENT);
+////                LocationServices.FusedLocationApi.requestLocationUpdates(
+////                        getGoogleApiClient(), locationReq, GoogleMapFragment.this);
+//
+//            }
+//        };
 
         mDrone = ((DroidPlannerApp) activity.getApplication()).getDrone();
         mAppPrefs = new DroidPlannerPrefs(context);
@@ -198,14 +195,14 @@ public class GoogleMapFragment extends SupportMapFragment implements DPMap, Loca
     @Override
     public void onStart() {
         super.onStart();
-        mGApiClientMgr.start();
+//        mGApiClientMgr.start();
         setupMap();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        mGApiClientMgr.stop();
+//        mGApiClientMgr.stop();
     }
 
     @Override
@@ -254,9 +251,9 @@ public class GoogleMapFragment extends SupportMapFragment implements DPMap, Loca
                     break;
 
                 case USER:
-                    if(!mGApiClientMgr.addTask(mRemoveLocationUpdateTask)){
-                        Log.e(TAG, "Unable to add google api client task.");
-                    }
+//                    if(!mGApiClientMgr.addTask(mRemoveLocationUpdateTask)){
+//                        Log.e(TAG, "Unable to add google api client task.");
+//                    }
                     break;
 
                 case DISABLED:
@@ -270,9 +267,9 @@ public class GoogleMapFragment extends SupportMapFragment implements DPMap, Loca
                     break;
 
                 case USER:
-                    if(!mGApiClientMgr.addTask(mRequestLocationUpdateTask)){
-                        Log.e(TAG, "Unable to add google api client task.");
-                    }
+//                    if(!mGApiClientMgr.addTask(mRequestLocationUpdateTask)){
+//                        Log.e(TAG, "Unable to add google api client task.");
+//                    }
                     break;
 
                 case DISABLED:
@@ -460,16 +457,16 @@ public class GoogleMapFragment extends SupportMapFragment implements DPMap, Loca
 
         //Update the listener with the last received location
         if(mLocationListener != null && isResumed()){
-            mGApiClientMgr.addTask(mGApiClientMgr.new GoogleApiClientTask() {
-                @Override
-                protected void doRun() {
-                    final Location lastLocation = LocationServices.FusedLocationApi.getLastLocation
-                            (getGoogleApiClient());
-                    if(lastLocation != null){
-                        mLocationListener.onLocationChanged(lastLocation);
-                    }
-                }
-            });
+//            mGApiClientMgr.addTask(mGApiClientMgr.new GoogleApiClientTask() {
+//                @Override
+//                protected void doRun() {
+////                    final Location lastLocation = LocationServices.FusedLocationApi.getLastLocation
+////                            (getGoogleApiClient());
+////                    if(lastLocation != null){
+////                        mLocationListener.onLocationChanged(lastLocation);
+////                    }
+//                }
+//            });
         }
     }
 
@@ -659,27 +656,27 @@ public class GoogleMapFragment extends SupportMapFragment implements DPMap, Loca
 
     @Override
     public void zoomToFitMyLocation(final List<Coord2D> coords) {
-        mGApiClientMgr.addTask(mGApiClientMgr.new GoogleApiClientTask() {
-            @Override
-            protected void doRun() {
-                final Location myLocation = LocationServices.FusedLocationApi.getLastLocation
-                        (getGoogleApiClient());
-                if (myLocation != null) {
-                    final List<Coord2D> updatedCoords = new ArrayList<Coord2D>(coords);
-                    updatedCoords.add(DroneHelper.LocationToCoord(myLocation));
-                    zoomToFit(updatedCoords);
-                } else {
-                    zoomToFit(coords);
-                }
-            }
-        });
+//        mGApiClientMgr.addTask(mGApiClientMgr.new GoogleApiClientTask() {
+//            @Override
+//            protected void doRun() {
+////                final Location myLocation = LocationServices.FusedLocationApi.getLastLocation
+////                        (getGoogleApiClient());
+////                if (myLocation != null) {
+////                    final List<Coord2D> updatedCoords = new ArrayList<Coord2D>(coords);
+////                    updatedCoords.add(DroneHelper.LocationToCoord(myLocation));
+////                    zoomToFit(updatedCoords);
+////                } else {
+////                    zoomToFit(coords);
+////                }
+//            }
+//        });
     }
 
     @Override
     public void goToMyLocation() {
-        if(!mGApiClientMgr.addTask(mGoToMyLocationTask)){
-            Log.e(TAG, "Unable to add google api client task.");
-        }
+//        if(!mGApiClientMgr.addTask(mGoToMyLocationTask)){
+//            Log.e(TAG, "Unable to add google api client task.");
+//        }
     }
 
     @Override
